@@ -15,12 +15,14 @@ const hostConfig = {
   },
   prepareForCommit() {},
   resetAfterCommit() {},
-  detachDeletedInstance() {},
+  detachDeletedInstance(instance) {
+    clearTimers(instance)
+  },
   createInstance(type, props) {
-    if (type !== "Tone") {
+    if (type !== "Tone" && type !== "Burst") {
       throw new Error("Unknown host component")
     }
-    return { type, props }
+    return { type, props, timers: [] as NodeJS.Timeout[] }
   },
   appendInitialChild(parent, child) {
     parent.children = parent.children || []
@@ -74,10 +76,17 @@ const hostConfig = {
   },
   commitUpdate(instance, updatePayload, type, oldProps, newProps) {
     instance.props = newProps
-    if (type === "Tone") beep()
+    if (type === "Tone") {
+      if (newProps.active === "on") beep()
+    }
+    if (type === "Burst") {
+      clearTimers(instance)
+      if (newProps.active === "on") scheduleBurst(instance)
+    }
   },
   commitMount(instance, type) {
-    if (type === "Tone") beep()
+    if (type === "Tone" && instance.props.active === "on") beep()
+    if (type === "Burst" && instance.props.active === "on") scheduleBurst(instance)
   },
   commitTextUpdate(textInstance, oldText, newText) {
     textInstance.text = newText
@@ -100,6 +109,22 @@ const hostConfig = {
   scheduleMicrotask(fn) {
     queueMicrotask(fn)
   }
+}
+
+function scheduleBurst(instance) {
+  const count = Math.max(1, Number(instance.props.burst ?? 1))
+  const gap = Math.max(20, Number(instance.props.gap ?? 60))
+  beep()
+  for (let i = 1; i < count; i += 1) {
+    const id = setTimeout(() => beep(), i * gap)
+    instance.timers.push(id)
+  }
+}
+
+function clearTimers(instance) {
+  if (!instance.timers) return
+  for (const id of instance.timers) clearTimeout(id)
+  instance.timers = []
 }
 
 export default hostConfig

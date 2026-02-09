@@ -1,3 +1,4 @@
+import React from "react"
 import reconciler from "./reconciler"
 
 const container = { type: "ROOT", children: [] }
@@ -18,4 +19,15 @@ function render(element: any) {
   reconciler.updateContainer(element, root, null, null)
 }
 
-export { render }
+type ToneProps = { active?: "on" | "off" }
+type BurstProps = { active?: "on" | "off"; count?: number; gap?: number }
+
+function Tone({ active = "off" }: ToneProps) {
+  return React.createElement("Tone", { active })
+}
+
+function Burst({ active = "off", count, gap }: BurstProps) {
+  return React.createElement("Burst", { active, burst: count, gap })
+}
+
+export { render, Tone, Burst }
