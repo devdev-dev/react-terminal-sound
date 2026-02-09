@@ -3,7 +3,7 @@ import { render, Tone, Burst } from "react-sound-renderer"
 import SonifyTemperature from "./interactivity/SonifyTemperature";
 
 function App() {
-  return <SonifyTemperature/>
+  return <Tone on={false}/>
 }
 
 render(<App />)
