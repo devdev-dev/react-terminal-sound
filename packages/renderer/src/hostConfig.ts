@@ -77,16 +77,16 @@ const hostConfig = {
   commitUpdate(instance, updatePayload, type, oldProps, newProps) {
     instance.props = newProps
     if (type === "Tone") {
-      if (newProps.active === "on") beep()
+      if (newProps.on) beep()
     }
     if (type === "Burst") {
       clearTimers(instance)
-      if (newProps.active === "on") scheduleBurst(instance)
+      if (newProps.on) scheduleBurst(instance)
     }
   },
   commitMount(instance, type) {
-    if (type === "Tone" && instance.props.active === "on") beep()
-    if (type === "Burst" && instance.props.active === "on") scheduleBurst(instance)
+    if (type === "Tone" && instance.props.on) beep()
+    if (type === "Burst" && instance.props.on) scheduleBurst(instance)
   },
   commitTextUpdate(textInstance, oldText, newText) {
     textInstance.text = newText

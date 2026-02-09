@@ -19,15 +19,15 @@ function render(element: any) {
   reconciler.updateContainer(element, root, null, null)
 }
 
-type ToneProps = { active?: "on" | "off" }
-type BurstProps = { active?: "on" | "off"; count?: number; gap?: number }
+type ToneProps = { on?: boolean }
+type BurstProps = { on?: boolean; count?: number; gap?: number }
 
-function Tone({ active = "off" }: ToneProps) {
-  return React.createElement("Tone", { active })
+function Tone({ on = false }: ToneProps) {
+  return React.createElement("Tone", { on })
 }
 
-function Burst({ active = "off", count, gap }: BurstProps) {
-  return React.createElement("Burst", { active, burst: count, gap })
+function Burst({ on = false, count, gap }: BurstProps) {
+  return React.createElement("Burst", { on, burst: count, gap })
 }
 
 export { render, Tone, Burst }
