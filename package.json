@@ -1,0 +1,15 @@
+{
+  "name": "react-sound-renderer",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "tsx": "^4.19.2",
+    "typescript": "^5.5.4",
+    "@types/react": "^18.2.66"
+  },
+  "scripts": {
+    "start": "tsx packages/example/src/index.tsx"
+  }
+}

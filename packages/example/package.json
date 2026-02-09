@@ -1,0 +1,10 @@
+{
+  "name": "example",
+  "version": "0.0.1",
+  "main": "src/index.tsx",
+  "type": "commonjs",
+  "dependencies": {
+    "react": "^18.0.0",
+    "react-sound-renderer": "0.0.1"
+  }
+}

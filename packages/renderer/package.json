@@ -1,0 +1,10 @@
+{
+  "name": "react-sound-renderer",
+  "version": "0.0.1",
+  "main": "src/index.ts",
+  "type": "commonjs",
+  "dependencies": {
+    "react": "^18.0.0",
+    "react-reconciler": "^0.29.0"
+  }
+}
