@@ -10,6 +10,7 @@
     "@types/react": "^18.2.66"
   },
   "scripts": {
-    "start": "tsx packages/example/src/index.tsx"
+    "start": "tsx packages/example/src/index.tsx",
+    "dev": "tsx watch packages/example/src/index.tsx"
   }
 }
