@@ -1,14 +1,34 @@
 import React from "react"
+import { Burst } from "react-sound-renderer";
 import readline from "readline"
-import { Burst } from "react-sound-renderer"
 type Weather = { temperature: number; windSpeed: number }
 
 function promptLocation(): Promise<string> {
   const rl = readline.createInterface({ input: process.stdin, output: process.stdout })
   return new Promise((resolve) => {
-    rl.question("Enter location: ", (answer) => {
-      rl.close()
-      resolve(answer.trim())
+    const options = ["Berlin", "Khed", "Yakutsk", "Other (type)"]
+    process.stdout.write("Select location:\n")
+    options.forEach((opt, i) => {
+      process.stdout.write(`${i + 1}. ${opt}\n`)
+    })
+    rl.question("Choice (1-4): ", (choice) => {
+      const index = Number(choice.trim())
+      if (index >= 1 && index <= 3) {
+        rl.close()
+        resolve(options[index - 1])
+        return
+      }
+      if (index === 4) {
+        rl.question("Enter location: ", (answer) => {
+          rl.close()
+          resolve(answer.trim())
+        })
+        return
+      }
+      rl.question("Enter location: ", (answer) => {
+        rl.close()
+        resolve(answer.trim())
+      })
     })
   })
 }
@@ -45,7 +65,7 @@ function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value))
 }
 
-export default function WeatherSound() {
+export default function SonifyTemperature() {
   const [weather, setWeather] = React.useState<Weather | null>(null)
   const [error, setError] = React.useState<string | null>(null)
 
