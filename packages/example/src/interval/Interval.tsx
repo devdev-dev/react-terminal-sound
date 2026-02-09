@@ -1,7 +1,7 @@
 import React from "react"
-import { render, Tone, Burst } from "react-sound-renderer"
+import { Tone } from "react-sound-renderer"
 
-function Interval() {
+export function Interval() {
   const [on, setOn] = React.useState(false)
 
   React.useEffect(() => {
@@ -9,5 +9,5 @@ function Interval() {
     return () => clearInterval(id)
   }, [])
 
-  return <Tone active="off" />
+  return <Tone on={on} />
 }
